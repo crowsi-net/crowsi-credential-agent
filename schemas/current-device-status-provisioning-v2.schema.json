@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ihat://identity/current-device-status-provisioning/v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema", "public_key_hex", "key_id", "issuer", "audience", "service_id", "path",
+    "pairwise_subject", "device_id", "device_proof_key_ref", "session_ref"
+  ],
+  "properties": {
+    "schema": { "const": "ihat://identity/current-device-status-provisioning/v2" },
+    "public_key_hex": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "key_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "issuer": { "type": "string", "minLength": 1, "maxLength": 512 },
+    "audience": { "const": "crowsi://credential-agent/current-status" },
+    "service_id": { "const": "service:crowsi" },
+    "path": { "type": "string", "pattern": "^/" },
+    "pairwise_subject": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "device_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "device_proof_key_ref": { "type": "string", "minLength": 1, "maxLength": 240 },
+    "session_ref": { "type": "string", "minLength": 1, "maxLength": 128 }
+  }
+}

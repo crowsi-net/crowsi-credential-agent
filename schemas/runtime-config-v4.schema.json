@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "crowsi://credential-agent/runtime-config/v4",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema", "pa_public_key_hex", "allowed_uid", "allowed_gid", "workload_id",
+    "caller_executable_sha256", "socket_path", "state_path", "custody_path",
+    "identity_status", "rate_limit_per_minute", "request_timeout_ms"
+  ],
+  "properties": {
+    "schema": { "const": "crowsi://credential-agent/runtime-config/v4" },
+    "pa_public_key_hex": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "allowed_uid": { "type": "integer", "minimum": 1 },
+    "allowed_gid": { "type": "integer", "minimum": 1 },
+    "workload_id": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "caller_executable_sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "socket_path": { "type": "string", "pattern": "^/" },
+    "state_path": { "type": "string", "pattern": "^/" },
+    "custody_path": { "type": "string", "pattern": "^/" },
+    "identity_status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "public_key_hex", "key_id", "issuer", "audience", "service_id", "path",
+        "pairwise_subject", "device_id", "device_proof_key_ref", "session_ref"
+      ],
+      "properties": {
+        "public_key_hex": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "key_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "issuer": { "type": "string", "minLength": 1, "maxLength": 512 },
+        "audience": { "const": "crowsi://credential-agent/current-status" },
+        "service_id": { "const": "service:crowsi" },
+        "path": { "type": "string", "pattern": "^/" },
+        "pairwise_subject": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "device_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "device_proof_key_ref": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "session_ref": { "type": "string", "minLength": 1, "maxLength": 128 }
+      }
+    },
+    "rate_limit_per_minute": { "type": "integer", "minimum": 1 },
+    "request_timeout_ms": { "type": "integer", "minimum": 1, "maximum": 30000 }
+  }
+}
